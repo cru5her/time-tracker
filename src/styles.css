@@ -1,1 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
+ngb-datepicker-month-view {
+  margin-top: 24px;
+}
+
+ngb-datepicker-month-view > table {
+  font-size: 20px;
+  line-height: 30px;
+}
+
+ngb-datepicker-month-view td {
+  padding: 15px;
+}
+
+ngb-datepicker-month-view .btn {
+  min-width: 20px;
+}

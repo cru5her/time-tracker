@@ -1,0 +1,28 @@
+input[type=time] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background: none;
+    height: 24px;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 1 auto;
+    flex: 0 1 auto;
+    margin-left: 0;
+    margin-right: 12px;
+    background: -webkit-linear-gradient(top, transparent 95%, #0094d2 95%);
+    background: linear-gradient(to bottom, transparent 95%, #0094d2 95%);
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    -webkit-transition: background-size 0.2s ease;
+    transition: background-size 0.2s ease;
+    padding: 0 6px;
+    display: inline-block;
+    border-bottom: 1px solid #9a9a9a;
+    min-width: 60px;
+}

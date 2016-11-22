@@ -1,0 +1,73 @@
+
+<table class="table">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Start</th>
+        <th>Ende</th>
+        <th>Pause</th>
+        <th>Stunden</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let day of days">
+        <td>{{day.date.format('D.MM.YYYY')}}</td>
+        <td>{{day._persist && day.start.format('HH:mm') || '---'}}</td>
+        <td>{{day._persist && day.end.format('HH:mm') || '---'}}</td>
+        <td>{{day._persist && day.break + ' min' || '---'}}</td>
+        <td>
+          {{getDifference(day.start, day.end, day.break).withBreak.format('HH:mm') + 'h (' 
+          +  getDifference(day.start, day.end, day.break).withoutBreak.format('HH:mm') + ')'}}
+        </td>
+        <td>
+          <button class="btn btn-sm btn-default" (click)="openWorkdayEdit(day)">
+            >
+          </button>
+          <button class="btn btn-sm btn-danger" (click)="removeWorkday(day.date.format('YYYY-MM-DD'))">
+            x
+          </button> 
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <td colspan="4"></td>
+        <td>{{getSum()}}</td>
+      </tr>
+    </tfoot>
+</table>
+<form #form name="editWorkday" *ngIf="modalWindowState">
+  <clr-modal [(clrModalOpen)]="modalWindowState" [clrModalClosable]="false">
+      <h3 class="modal-title">Eintrag bearbeiten</h3>
+      <div class="modal-body">   
+        <section class="form-block">
+            <label>{{editWorkdayEntry.date.format('D.MM.YYYY')}}</label>
+            <div class="form-group">
+                <label class="required" for="aForm_1">Start</label>
+                <label class="tooltip tooltip-validation tooltip-sm" [ngClass]="{invalid: startTimeCtrl.touched && startTimeCtrl.errors && startTimeCtrl.errors['required']}">
+                  <input type="time" [(ngModel)]="startTime" name="startTime" #startTimeCtrl="ngModel" placeholder="Wert eingeben"
+                    required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label class="required" for="aForm_2">Ende</label>
+                <label class="tooltip tooltip-validation tooltip-sm" [ngClass]="{invalid: endTimeCtrl.touched && endTimeCtrl.errors && endTimeCtrl.errors['required']}">
+                  <input type="time" [(ngModel)]="endTime" name="endTime" #endTimeCtrl="ngModel" placeholder="Wert eingeben" length="10"
+                    required>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="aForm_3">Pause</label>
+                <input type="number" [(ngModel)]="editWorkdayEntry.break" name="break" placeholder="Wert eingeben">
+            </div>
+        </section>
+      </div>
+      <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" (click)="saveWorkday(editWorkdayEntry)">Save</button>
+          <button type="button" class="btn btn-primary" (click)="modalWindowState = false">
+              Close
+          </button>
+      </div>
+  </clr-modal>
+</form>

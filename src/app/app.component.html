@@ -1,15 +1,18 @@
-<div class="container">
-	<div class="navbar-header">
-		<p class="navbar-brand">{{title}}</p>
+<div class="main-container">
+	<header class="header-6">
+		<div class="branding">
+			<a href="javascript://" class="nav-link">
+				<span class="title">{{title}}</span>
+			</a>
+		</div>
+	</header>
+	<div class="content-container">
+		<div class="col-md-12">
+			<div class="row">
+				<jk-datepicker class="col-md-4" (weekChanged)="setWeek($event)"></jk-datepicker>
+				<jk-weekdays class="col-md-8" [currentDate]="currentDate"></jk-weekdays>
+			</div>
+		</div>
 	</div>
-	<nav class="collapse navbar-collapse" id="bs-navbar">
-		<ul class="nav navbar-nav">
-			
-		</ul>
-	</nav>
 </div>
-<div class="container content">
-  <div class="row">
-    <ngbd-datepicker-basic></ngbd-datepicker-basic>
-  </div>
-</div>
+
