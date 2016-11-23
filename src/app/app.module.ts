@@ -10,6 +10,7 @@ import { ClarityModule } from 'clarity-angular';
 
 import { AppComponent } from './app.component';
 import { WeekdaysComponent } from './weekdays/weekdays.component';
+import { AlertComponent } from './alert/alert.component';
 
 // Must export the config
 export const firebaseConfig = {
@@ -32,7 +33,8 @@ export const firebaseConfig = {
   declarations: [
     AppComponent,
     Datepicker,
-    WeekdaysComponent
+    WeekdaysComponent,
+    AlertComponent
   ],
   providers: [CrudService],
   bootstrap: [AppComponent]

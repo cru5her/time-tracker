@@ -1,8 +1,9 @@
+import { AlertComponent } from './../alert/alert.component';
 import { element } from 'protractor';
 import { CrudService } from './../crud.service';
-import { Workday, WorkdayEntity } from './../shared/models';
-import { Component, OnInit, Input } from '@angular/core';
-import { cloneDeep, keyBy } from 'lodash';
+import { Workday, WorkdayEntity, MessageType } from './../shared/models';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { cloneDeep, keyBy, uniqueId } from 'lodash';
 import { Observable } from 'rxjs/Observable';
 import { FirebaseListObservable } from 'angularfire2';
 import * as moment from 'moment';
@@ -16,13 +17,18 @@ export class WeekdaysComponent implements OnInit {
 
   _date: moment.Moment;
   days: Workday[] = [];
-  modalWindowState: boolean = false;
+  editModalState: boolean = false;
+  deleteModalState: boolean = false;
   editWorkdayEntry: Workday;
   startTime: String;
   endTime: String;
   data: FirebaseListObservable<Workday[]>;
   list: WorkdayEntity[] = [];
+  deletePromise: Promise<any>;
 
+  private deleteKey: string;
+  @ViewChild(AlertComponent)
+  private alertCmp;
 
   @Input()
   set currentDate(date: moment.Moment) {
@@ -44,7 +50,7 @@ export class WeekdaysComponent implements OnInit {
 
 
   openWorkdayEdit(current: Workday) {
-    this.modalWindowState = true;
+    this.editModalState = true;
     this.editWorkdayEntry = current;
   }
 
@@ -69,7 +75,7 @@ export class WeekdaysComponent implements OnInit {
     });
     let hours = Math.floor(sum.asHours());
     let mins = Math.floor(sum.asMinutes()) - hours * 60;
-    return hours + ':' + mins;
+    return (hours < 10 ? hours + '0' : hours) + ':' + (mins < 10 ? mins + '0' : mins);
   }
 
   saveWorkday(toSave: Workday) {
@@ -82,15 +88,37 @@ export class WeekdaysComponent implements OnInit {
     toSave._persist = true;
 
     this.db.saveObj(toSave).then(() => {
-      this.modalWindowState = false;
-      this.editWorkdayEntry = null;
-      this.startTime = null;
-      this.endTime = null;
+        this.editModalState = false;
+        this.editWorkdayEntry = null;
+        this.startTime = null;
+        this.endTime = null;
+        this.alertCmp.addMessage({
+          id: uniqueId('msg-'),
+          message: 'Eintrag wurde erfolgreiche erstellt',
+          type: MessageType.SUCCESS
+        });
     });
   }
 
-  removeWorkday(key: string) {
-    this.db.removeObj(key);
+  openDeleteConfirmation(key: string) {
+    this.deleteModalState = true;
+    this.deleteKey = key;
+  }
+
+  cancelDelete() {
+    this.deleteModalState = false;
+    this.deleteKey = null;
+  }
+
+  removeWorkday() {
+    this.db.removeObj(this.deleteKey);
+    this.deleteModalState = false;
+    this.alertCmp.addMessage({
+      id: uniqueId('msg-'),
+      message: 'Eintrag wurde erfolgreiche gelöscht',
+      type: MessageType.SUCCESS
+    });
+    console.log('fmdl');
   }
 
   private _initWeek(current: moment.Moment) {

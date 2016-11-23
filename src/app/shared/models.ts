@@ -33,3 +33,16 @@ export class WorkdayEntity {
     return workday;
   }
 }
+
+export class AlertMessage {
+  id: string;
+  message: string;
+  type: MessageType;
+}
+
+export enum MessageType {
+  DANGER = <any>'alert-danger',
+  WARNING = <any>'alert-warning',
+  INFO = <any>'alert-info',
+  SUCCESS = <any>'alert-success'
+}

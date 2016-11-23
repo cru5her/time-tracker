@@ -26,3 +26,7 @@ input[type=time] {
     border-bottom: 1px solid #9a9a9a;
     min-width: 60px;
 }
+
+.btn {
+    min-width: 0px;
+}

@@ -1,5 +1,7 @@
-
-<table class="table">
+<div class="row" style="padding-top: 15px">
+  <jk-alert class="col-md-12"></jk-alert>
+</div>
+<table class="table" *ngIf="days.length">
     <thead>
       <tr>
         <th>Datum</th>
@@ -20,11 +22,11 @@
           {{getDifference(day.start, day.end, day.break).withBreak.format('HH:mm') + 'h (' 
           +  getDifference(day.start, day.end, day.break).withoutBreak.format('HH:mm') + ')'}}
         </td>
-        <td>
+        <td class="left">
           <button class="btn btn-sm btn-default" (click)="openWorkdayEdit(day)">
             >
           </button>
-          <button class="btn btn-sm btn-danger" (click)="removeWorkday(day.date.format('YYYY-MM-DD'))">
+          <button class="btn btn-sm btn-danger" *ngIf="day._persist" (click)="openDeleteConfirmation(day.date.format('YYYY-MM-DD'))">
             x
           </button> 
         </td>
@@ -37,8 +39,9 @@
       </tr>
     </tfoot>
 </table>
-<form #form name="editWorkday" *ngIf="modalWindowState">
-  <clr-modal [(clrModalOpen)]="modalWindowState" [clrModalClosable]="false">
+
+<form #form name="editWorkday" *ngIf="editModalState">
+  <clr-modal [(clrModalOpen)]="editModalState" [clrModalClosable]="false">
       <h3 class="modal-title">Eintrag bearbeiten</h3>
       <div class="modal-body">   
         <section class="form-block">
@@ -65,9 +68,20 @@
       </div>
       <div class="modal-footer">
           <button type="submit" class="btn btn-primary" (click)="saveWorkday(editWorkdayEntry)">Save</button>
-          <button type="button" class="btn btn-primary" (click)="modalWindowState = false">
+          <button type="button" class="btn btn-primary" (click)="editModalState = false">
               Close
           </button>
       </div>
   </clr-modal>
 </form>
+
+<clr-modal [(clrModalOpen)]="deleteModalState" [clrModalClosable]="false">
+      <h3 class="modal-title">Eintrag bearbeiten</h3>
+      <div class="modal-body">   
+        <p>Willst du den Eintrag wirklich löschen?</p>
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-primary" (click)="removeWorkday()">Ja</button>
+          <button type="button" class="btn btn-primary" (click)="cancelDelete()">Nein</button>
+      </div>
+  </clr-modal>
