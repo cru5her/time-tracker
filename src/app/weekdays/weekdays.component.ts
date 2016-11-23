@@ -61,13 +61,15 @@ export class WeekdaysComponent implements OnInit {
   getSum() {
     let sum: moment.Duration = moment.duration(0);
     this.days.forEach((day) => {
-      let current = this.getDifference(day.start, day.end);
+      let current = this.getDifference(day.start, day.end, day.break);
       if (current) {
         sum.add(current.withBreak.hour(), 'hour');
         sum.add(current.withBreak.minute(), 'minute');
       }
     });
-    return moment.utc(sum.asMilliseconds()).format('HH:mm:ss');
+    let hours = Math.floor(sum.asHours());
+    let mins = Math.floor(sum.asMinutes()) - hours * 60;
+    return hours + ':' + mins;
   }
 
   saveWorkday(toSave: Workday) {
