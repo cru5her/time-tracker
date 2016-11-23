@@ -6,12 +6,18 @@ ngb-datepicker-month-view {
 ngb-datepicker-month-view > table {
   font-size: 20px;
   line-height: 30px;
-}
-
-ngb-datepicker-month-view td {
-  padding: 15px;
+  min-width: 100%;
 }
 
 ngb-datepicker-month-view .btn {
-  min-width: 20px;
+  min-width: 15px;
+}
+
+ngb-datepicker table {
+  min-width: 100%;
+  padding-top: 15px;
+}
+
+ngb-datepicker {
+  min-width: 90%;
 }
