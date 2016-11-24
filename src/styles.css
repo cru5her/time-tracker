@@ -21,3 +21,42 @@ ngb-datepicker table {
 ngb-datepicker {
   min-width: 90%;
 }
+
+/* loaders.css */
+
+.bootstrap-anim {
+  position: absolute;
+  margin: auto;
+  top: 45%;
+  left: 48%;
+}
+
+.ball-scale-ripple-multiple > div {
+  border-color: dodgerblue;
+}
+
+.ball-pulse > div {
+  border-color: dodgerblue;
+  background: dodgerblue;
+}
+
+.loader-msg {
+  margin-left: -50px;
+  padding-top: 30px;
+}
+
+.loader-center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto
+}
+
+.col-justify {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  /* -webkit-box-pack: center; */
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+}

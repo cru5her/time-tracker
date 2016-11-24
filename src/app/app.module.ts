@@ -11,6 +11,7 @@ import { ClarityModule } from 'clarity-angular';
 import { AppComponent } from './app.component';
 import { WeekdaysComponent } from './weekdays/weekdays.component';
 import { AlertComponent } from './alert/alert.component';
+import { LoadersCssModule } from 'angular2-loaders-css';
 
 // Must export the config
 export const firebaseConfig = {
@@ -28,7 +29,8 @@ export const firebaseConfig = {
     HttpModule,
     NgbModule.forRoot(),
     ClarityModule,
-    AngularFireModule.initializeApp(firebaseConfig)
+    AngularFireModule.initializeApp(firebaseConfig),
+    LoadersCssModule
   ],
   declarations: [
     AppComponent,

@@ -25,6 +25,7 @@ export class WeekdaysComponent implements OnInit {
   data: FirebaseListObservable<Workday[]>;
   list: WorkdayEntity[] = [];
   deletePromise: Promise<any>;
+  showError: boolean = false;
 
   private deleteKey: string;
   @ViewChild(AlertComponent)
@@ -78,13 +79,18 @@ export class WeekdaysComponent implements OnInit {
     return (hours < 10 ? hours + '0' : hours) + ':' + (mins < 10 ? mins + '0' : mins);
   }
 
-  saveWorkday(toSave: Workday) {
+  saveWorkday(toSave: Workday, form: any) {
+    if (form.invalid) {
+      this.showError = true;
+      return;
+    }
     let start = this.startTime.split(':');
     let end = this.endTime.split(':');
     toSave.start.set('hour', parseInt(start[0], 0));
     toSave.start.set('minute', parseInt(start[1], 0));
     toSave.end.set('hour', parseInt(end[0], 0));
     toSave.end.set('minute', parseInt(end[1], 0));
+    if (!toSave.break) { toSave.break = 0; }
     toSave._persist = true;
 
     this.db.saveObj(toSave).then(() => {
@@ -92,6 +98,7 @@ export class WeekdaysComponent implements OnInit {
         this.editWorkdayEntry = null;
         this.startTime = null;
         this.endTime = null;
+        this.showError = false;
         this.alertCmp.addMessage({
           id: uniqueId('msg-'),
           message: 'Eintrag wurde erfolgreiche erstellt',
