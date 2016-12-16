@@ -29,7 +29,7 @@
             </td>
             <td class="left">
               <button class="btn btn-sm btn-default" (click)="openWorkdayEdit(day)">
-                <
+                <clr-icon shape="info" size="12"></clr-icon>
               </button>
               <button class="btn btn-sm btn-danger" *ngIf="day._persist" (click)="openDeleteConfirmation(day.date.format('YYYY-MM-DD'))">
                 x
@@ -44,6 +44,9 @@
           </tr>
         </tfoot>
     </table>
+  </div>
+  <div class="col-md-12">
+    <button type="submit" class="btn btn-primary" (click)="noop()">Monat drucken</button>
   </div>
 </div>
 
@@ -80,21 +83,21 @@
       </section>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="saveWorkday(editWorkdayEntry, form)">Save</button>
         <button type="button" class="btn btn-primary" (click)="editModalState = false">
             Close
         </button>
+        <button type="submit" class="btn btn-primary" (click)="saveWorkday(editWorkdayEntry, form)">Save</button>
     </div>
   </clr-modal>
 </form>
 
 <clr-modal [(clrModalOpen)]="deleteModalState" [clrModalClosable]="false">
-      <h3 class="modal-title">Eintrag bearbeiten</h3>
-      <div class="modal-body">   
-        <p>Willst du den Eintrag wirklich löschen?</p>
-      </div>
-      <div class="modal-footer">
-          <button type="button" class="btn btn-primary" (click)="removeWorkday()">Ja</button>
-          <button type="button" class="btn btn-primary" (click)="cancelDelete()">Nein</button>
-      </div>
-  </clr-modal>
+  <h3 class="modal-title">Eintrag bearbeiten</h3>
+  <div class="modal-body">   
+    <p>Willst du den Eintrag wirklich löschen?</p>
+  </div>
+  <div class="modal-footer">
+      <button type="button" class="btn btn-default" (click)="cancelDelete()">Nein</button>
+      <button type="button" class="btn btn-primary" (click)="removeWorkday()">Ja</button>
+  </div>
+</clr-modal>
